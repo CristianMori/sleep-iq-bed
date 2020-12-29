@@ -1,5 +1,5 @@
 const SmartApp = require('@smartthings/smartapp');
-const api = require('./lib/sleepiq');
+const api = require('./lib/API');
 
 module.exports = new SmartApp()
     .configureI18n()
@@ -12,7 +12,7 @@ module.exports = new SmartApp()
                     { id: "R", name: "Right" }
                 ])
                 .defaultValue("L")
-				required(true);
+				.required(true);
         });
     })
     .updated(async ctx => {
