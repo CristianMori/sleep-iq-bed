@@ -1,4 +1,4 @@
-# Control SleepIQ Bed
+# SleepIQ Bed SmartThings App
 
 This is lambda SmartApp controls Sleep IQ bed to achive atomation.
 
