@@ -1,0 +1,33 @@
+{
+  "name": "sleep-iq-bed",
+  "version": "1.0.0",
+  "description": "Control Sleep IQ Bed",
+  "repository": "https://github.com/gilderman/sleep-iq-bed",
+  "main": "server.js",
+  "ava": {
+    "files": [
+      "./**/*.spec.js"
+    ],
+    "failFast": true
+  },
+  "scripts": {
+    "test": "NODE_ENV=test ava --verbose",
+    "start": "node server.js"
+  },
+  "author": "Ilia Gilderman",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@smartthings/smartapp": "^2.4.3",
+    "axios": "^0.20.0",
+    "dotenv": "^8.2.0",
+    "prettyjson": "^1.2.1"
+  },
+  "devDependencies": {
+    "ava": "^3.13.0",
+    "express": "^4.17.1",
+    "serverless": "^2.15.0"
+  },
+  "engines": {
+    "node": "^12"
+  }
+}
