@@ -14,6 +14,7 @@
     "@smartthings/smartapp": "^2.4.3",
     "axios": "^0.20.0",
     "dotenv": "^8.2.0",
+    "ngrok": "^3.4.0",
     "prettyjson": "^1.2.1",
     "request": "^2.34",
     "request-promise-native": "^1.0.7"

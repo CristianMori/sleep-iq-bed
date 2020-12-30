@@ -15,6 +15,7 @@ package:
     - config/**
     - test/**
     - server.js
+    - bin/**
 
 provider:
   name: aws

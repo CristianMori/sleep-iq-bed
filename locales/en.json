@@ -1,5 +1,12 @@
 {
 	"pages.mainPage.name": "Sleep IQ",
-	"pages.mainPage.sections.bedsize.name": "Bed Side",
+	"pages.mainPage.settings.bedside.name": "Bed Side",
+	"pages.mainPage.sections.bedside.name": "Please select your side of the bed",
+	"pages.mainPage.sections.sleepiq-account.name": "Sleep IQ Account",
+	"pages.mainPage.settings.email.name": "Email for Sleep IQ account",
+	"pages.mainPage.settings.password.name": "Passwords for Sleep IQ account",
+	"pages.mainPage.settings.bedside.options.Right.name": "Right",
+	"pages.mainPage.settings.bedside.options.Left.name": "Left",
+
 	"Tap to set": "Tap to set"
 }

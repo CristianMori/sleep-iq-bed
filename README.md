@@ -35,6 +35,10 @@ Clone or download this repository and follow the desired option.
 
 1. Follow the steps to grant SmartThings [permission to execute your Lambda function](https://smartthings.developer.samsung.com/docs/smartapps/aws-lambda.html). **This is required for successful registration.**
 
+### Glitch (no account required)
+
+[![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/import/github/gilderman/sleep-iq-bed)
+
 ### Local
 
 1. Create a `.env` and store your SleepIQ email/password as shown in `.env.example` file.
