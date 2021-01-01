@@ -1,5 +1,11 @@
-const smartApp = require('./smartapp');
+'use strict';
 
-module.exports.handle = (event, context, callback) => {
-    smartApp.handleLambdaCallback(event, context, callback);
+/**
+ * AWS Lambda handler configured to host ST Schema connector
+ */
+
+const connector = require('./connector')
+
+exports.handler = async (evt, context) => {
+	await connector.handleLambdaCallback(evt, context);
 };
