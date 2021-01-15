@@ -5,14 +5,14 @@ frameworkVersion: "2"
 package:
   include:
     - index.js
-    - smartapp.js
+    - connector.js
+    - oauth2.js
     - lib/**
-    - locales/**
+    - config/**
   exclude:
     - .git/**
     - .gitignore
     - .env*
-    - config/**
     - test/**
     - server.js
     - bin/**
