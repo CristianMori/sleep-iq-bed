@@ -7,5 +7,7 @@
 const connector = require('./connector')
 
 exports.handler = async (evt, context) => {
-	await connector.handleLambdaCallback(evt, context);
+  if (connector.accessTokenIsValid(context, null)) {
+	  await connector.handleLambdaCallback(evt, context);
+  }
 };

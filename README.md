@@ -1,8 +1,15 @@
 # SleepIQ Bed SmartThings App
 
 This is lambda SmartApp controls Sleep IQ bed to achive atomation.
+It uses Amazon Cognito as ouath2 server and the README file explains how to set it up
+There is also a local version for debugging purposes
 
-- Creating schedules and handling scheduled executions.
+## To Do
+1. Speeing sensor
+2. Alternative UI
+3. Timer for heater
+4. Signals from Smart Bed
+
 
 ## Setup instructions
 

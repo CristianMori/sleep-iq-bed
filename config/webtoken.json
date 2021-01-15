@@ -1,0 +1,2 @@
+# save here content of the file your download from 
+# https://cognito-idp.{region}.amazonaws.com/{userPoolId}/.well-known/jwks.json 

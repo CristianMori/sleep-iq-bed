@@ -1,13 +1,19 @@
-const smartApp = require('./smartapp');
-const express = require('express');
+'use strict';
+
+require('dotenv').config();
+const express = require('express')
+const connector = require('./connector')
+
+const PORT = process.env.PORT || 3000
+
 const server = express();
-const PORT = process.env.PORT || 3005;
-
-
-/* Express server used for local testing only */
 server.use(express.json());
-server.post('/', (req, res, next) => {
-    smartApp.handleHttpCallback(req, res);
+
+server.post('/', (req, res) => {
+  if (connector.accessTokenIsValid(req, res)) {
+    connector.handleHttpCallback(req, res)
+  }
 });
 
-server.listen(PORT, () => console.log(`Server is up and running on port ${PORT}`));
+server.listen(PORT);
+console.log(`Server listening on http://127.0.0.1:${PORT}`);
