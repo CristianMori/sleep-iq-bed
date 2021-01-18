@@ -5,10 +5,9 @@ It uses Amazon Cognito as ouath2 server and the README file explains how to set 
 There is also a local version for debugging purposes
 
 ## To Do
-1. Speeing sensor
-2. Alternative UI
-3. Timer for heater
-4. Signals from Smart Bed
+1. Sleeping sensor - the bed knows when you sleep or not, how we can get it in real time
+2. Alternative UI - i tried several options, for some reason it does not work
+3. Timer for heater (not super needed, never changed it)
 
 
 ## Setup instructions
@@ -34,13 +33,26 @@ Clone or download this repository and follow the desired option.
 
 1. Install the dependencies for this app: `npm install`.
 
-1. Follow the instructions to [setup AWS credentials](https://www.serverless.com/framework/docs/providers/aws/guide/credentials/) for serverless.
+2. Follow the instructions to [setup AWS credentials](https://www.serverless.com/framework/docs/providers/aws/guide/credentials/) for serverless.
 
-1. Deploy the Lambda function: `serverless deploy`.
+3. Deploy the Lambda function: `serverless deploy`.
 
-1. Navigate to the AWS Lambda dashboard to [add an env var](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html) with the values of `SLEEPIQ_EMAIL` and `SLEEPIQ_PASSWORD`.
+4. Navigate to the AWS Lambda dashboard to [add an env var](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html) with the values of `SLEEPIQ_EMAIL` and `SLEEPIQ_PASSWORD`.
 
-1. Follow the steps to grant SmartThings [permission to execute your Lambda function](https://smartthings.developer.samsung.com/docs/smartapps/aws-lambda.html). **This is required for successful registration.**
+5. Follow the steps to grant SmartThings [permission to execute your Lambda function](https://smartthings.developer.samsung.com/docs/smartapps/aws-lambda.html). **This is required for successful registration.**
+
+
+### Configure AWS Cognito
+I'm using AWS Cognito as ouath2 provider. Free tier will be enough
+1. Configure user pool (I'm using name and email)
+2. Configure app client (nothing fancy)
+3. In app client settings set callback url to https://c2c-us.smartthings.com/oauth/callback. Set allowed OAuth flows to authorize code grant. Set allowed ouath scope to openid
+4. Select your domain name
+5. In the Samsung Workspace set the client id and client secret to the client id and client secret you got in step 2. Set Authorization URI to 
+https://{domain-name-from-step-4}-prod.auth.us-east-1.amazoncognito.com/oauth2/authorize. Set token URI to https://{domain-name-from-step-4}-prod.auth.us-east-1.amazoncognito.com/oauth2/token/ Most importanly setup you OAuth scope ot openid
+6. I creted to users in the user pool for me and my wife. The emails and names should much the email and name you have in your sleep iq app.
+7. Download a webtoken file from https://cognito-idp.{region}.amazonaws.com/{userPoolId}/.well-known/jwks.json and save it in config/webtooken.json
+
 
 ### Glitch (no account required)
 
@@ -48,21 +60,22 @@ Clone or download this repository and follow the desired option.
 
 ### Local
 
-1. Create a `.env` and store your SleepIQ email/password as shown in `.env.example` file.
+1. Create a `.env` and store your SleepIQ email/password as shown in `.env.example` file. In addtion set 
+ACCESS_TOKEN_CLIENT_ID=client id you got in Cognito
+CLIENT_ID=YOUR_CLIENT_ID_FRROM_DEV_WORKSPACE
+CLIENT_SERCRET=YOUR_CLIENT_SECRET_FROM_DEV_WORKSPACE
+USER_INFO_ENDPOINT=https://{cognito-domain-name}-prod.auth.{region}.amazoncognito.com/oauth2/userInfo
 
-1. Install the dependencies for this app: `npm install`.
+2. Install the dependencies for this app: `npm install`.
 
-1. Start the server: `npm start`.
+3. Start the server: `npm start`.
 
-1. Start ngrok (in another terminal window/tab): `ngrok http 3005`. Copy the `https:` URL to your clipboard.
+4. Start ngrok (in another terminal window/tab): `ngrok http 3005`. Copy the `https:` URL to your clipboard.
 
 ### Register
 
 1. Follow the instructions for [registering a SmartApp](https://smartthings.developer.samsung.com/docs/smartapps/app-registration.html) with the SmartThings platform.
-	- The following OAuth2 scopes are required.
-		- `r:devices:*`
-		- `x:devices:*`
-
+	
 #### Local Only
 
 A `CONFIRMATION request` log should show in the log output of the local server once registered. Navigate to this link to [verify your domain ownership](https://smartthings.developer.samsung.com/docs/smartapps/webhook-apps.html#Verify-your-domain-ownership) and enable the app to receive events. **This is required for successful installation.**

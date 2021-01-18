@@ -32,8 +32,15 @@
       "component": "Preset",
       "capability": "switchLevel",
       "version": 1,
-      "values": [],
-      "patch": []
+      "values": [
+		{
+            "key": "level",
+			"range": [
+				1,
+                6
+            ],
+            "step": 1
+        }]
     },
     {
       "component": "FootWarmer",
@@ -182,8 +189,16 @@
         "component": "Preset",
         "capability": "switchLevel",
         "version": 1,
-        "values": [],
-        "patch": []
+		"values": [
+		{
+            "key": "level",
+			"range": [
+				1,
+                6
+            ],
+            "step": 1
+        }]
+
       }
     ],
     "actions": [
@@ -275,8 +290,16 @@
         "component": "Preset",
         "capability": "switchLevel",
         "version": 1,
-        "values": [],
-        "patch": []
+		"values": [
+		{
+            "key": "level",
+			"range": [
+				1,
+                6
+            ],
+            "step": 1
+        }]
+
       }
     ]
   },

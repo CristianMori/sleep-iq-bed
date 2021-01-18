@@ -5,25 +5,24 @@ const jwkToPem = require('jwk-to-pem')
 const jsonWebKeys = require('./webtoken.json')['keys']
 
 const axios = require('axios')
-const USER_INFO_ENDPOINT = "https://stgilderman-prod.auth.us-east-1.amazoncognito.com/oauth2/userInfo"
-
-
 
 class oauth2 {
-  constructor(clientId) {
+  constructor(clientId, userInfoEndpoint) {
     this.clientId = clientId
     this.username = null
     this.token = null
+    this.userInfoEndpoint = userInfoEndpoint
   }  
   
   getUserInfo(token, callback=null) {
-    return axios.get(USER_INFO_ENDPOINT, { headers: {'Authorization': 'Bearer ' + token }})
+    return axios.get(this.userInfoEndpoint, { headers: {'Authorization': 'Bearer ' + token }})
                 .then (response => {
                   if (callback) {
                     callback(response.data)
                   }
                 })
                 .catch(error => {
+                  console.log("ERROR : error")
                   throw error;
                 });
   }
@@ -57,7 +56,7 @@ class oauth2 {
           if (err) {
               console.error(err)
           } else {
-              console.log(decodedToken);
+//              console.log(decodedToken);
               if (decodedToken.client_id === this.clientId) {
                 this.username = decodedToken.username
                 this.token = token

@@ -12,16 +12,20 @@ const DEVICE_MANUFACTURER_NAME = 'Sleep Number';
 const DEVICE_MODEL_NAME = 'Sleep Number';
 
 const oauth2 = require('./oauth2')
-const ACCESS_TOKEN_CLIENT_ID = process.env.ACCESS_TOKEN_CLIENT_ID;
 
 class SleepNumberBedSchemaConnector extends SchemaConnector {
   constructor() {
-    super()
+    super({clientId: process.env.CLIENT_ID, clientSecret: process.env.CLIENT_SECRET})
 
     this.bedSide = 0
     this.healthStatus =  false
+    this.deviceName = null
+    this.deviceId = null
 
-    this.oauth = new oauth2(ACCESS_TOKEN_CLIENT_ID)
+    this.callbackAuthenticationCode = null
+    this.stateCallback = null
+    
+    this.oauth = new oauth2(process.env.ACCESS_TOKEN_CLIENT_ID, process.env.USER_INFO_ENDPOINT)
 
     this.sncAPI = new SleepNumberConnectorAPI(process.env.SLEEPIQ_EMAIL, process.env.SLEEPIQ_PASSWORD)
   }
@@ -30,6 +34,10 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
     this.healthStatus = true
     try {
         await this.sncAPI.setup(this.oauth, accessToken);
+      
+        this.deviceId = DEVICE_ID + this.sncAPI.name
+        this.deviceName = DEVICE_NAME + " (" + this.sncAPI.name + ")"
+
         return this.sncAPI.refresh();
     }
     catch (error) {
@@ -45,15 +53,18 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
 
   async stateRefreshCallback(accessToken, response) {
     await this.initialize(accessToken)
-    const deviceResponse = response.addDevice(DEVICE_ID)
+    
+    const deviceResponse = response.addDevice(this.deviceId)
     
     const bed = this.sncAPI.getBed()
+    const healthStatus = this.healthStatus ? 'online' : 'offline'
+
     deviceResponse.addState(ComponentTypes.BED, 'st.presenceSensor', 'presence', bed.isInBed ? 'present' : 'not present')
-    deviceResponse.addState(ComponentTypes.BED, 'st.sleepSensor', 'sleeping', 'not sleeping')
+    deviceResponse.addState(ComponentTypes.BED, 'st.sleepSensor', 'sleeping', 'not sleeping') // we need to find a way to get it in real time
     deviceResponse.addState(ComponentTypes.PRESET, 'st.switchLevel', 'level', bed.preset)
     deviceResponse.addState(ComponentTypes.MAIN, 'st.healthCheck', 'checkInterval', 600)
-    deviceResponse.addState(ComponentTypes.MAIN, 'st.healthCheck', 'DeviceWatch-DeviceStatus', this.healthStatus ? 'online' : 'offline')
-    deviceResponse.addState(ComponentTypes.MAIN, 'st.healthCheck', 'healthStatus', this.healthStatus ? 'online' : 'offline')
+    deviceResponse.addState(ComponentTypes.MAIN, 'st.healthCheck', 'DeviceWatch-DeviceStatus', healthStatus)
+    deviceResponse.addState(ComponentTypes.MAIN, 'st.healthCheck', 'healthStatus', healthStatus)
     deviceResponse.addState(ComponentTypes.FOOTWARMER, 'st.switchLevel', 'level', bed.footWarmingStatus)
     deviceResponse.addState(ComponentTypes.SLEEPNUMBER,'st.switchLevel', 'level', bed.sleepNumber)
     deviceResponse.addState(ComponentTypes.HEAD, 'st.switchLevel', 'level', bed.headPosition)
@@ -117,9 +128,20 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
       }
     }
   }
-  
-  discoveryCallback(accessToken, response) {
-    const device = response.addDevice(DEVICE_ID, DEVICE_NAME, DEVICE_PROFILE_ID);
+    
+  callbackAccessHandlerCallback(accessToken, callbackAuthentication, callbackUrls)  {
+    console.log("accessToken", accessToken)
+    console.log("callbackAuthentication", callbackAuthentication)
+    console.log("callbackUrl", callbackUrls)
+
+    this.callbackAuthentionCode = callbackAuthentication.code
+    this.stateCallback = callbackUrls.stateCallback
+  }
+
+  async discoveryCallback(accessToken, response) {
+    await this.initialize(accessToken)
+    
+    const device = response.addDevice(this.deviceId, this.deviceName, DEVICE_PROFILE_ID);
     device.manufacturerName(DEVICE_MANUFACTURER_NAME);
     device.modelName(DEVICE_MODEL_NAME);
   }
@@ -136,9 +158,11 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
 }
 
 const connector = new SleepNumberBedSchemaConnector()
+
 connector.enableEventLogging(2)
 connector.discoveryHandler(connector.discoveryCallback)
 connector.stateRefreshHandler(connector.stateRefreshCallback)
 connector.commandHandler(connector.commandCallback)
+connector.callbackAccessHandler(connector.callbackAccessHandlerCallback)
 
 module.exports = connector
