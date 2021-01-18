@@ -38,6 +38,7 @@ Clone or download this repository and follow the desired option.
 3. Deploy the Lambda function: `serverless deploy`.
 
 4. Navigate to the AWS Lambda dashboard to [add an env var](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html) with the values of `SLEEPIQ_EMAIL` and `SLEEPIQ_PASSWORD`.
+In addtion set ACCESS_TOKEN_CLIENT_ID=client id you got in Cognito CLIENT_ID=YOUR_CLIENT_ID_FRROM_DEV_WORKSPACE CLIENT_SERCRET=YOUR_CLIENT_SECRET_FROM_DEV_WORKSPACE USER_INFO_ENDPOINT=https://{cognito-domain-name}-prod.auth.{region}.amazoncognito.com/oauth2/userInfo
 
 5. Follow the steps to grant SmartThings [permission to execute your Lambda function](https://smartthings.developer.samsung.com/docs/smartapps/aws-lambda.html). **This is required for successful registration.**
 
