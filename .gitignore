@@ -9,6 +9,10 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+config/my-serverless.json
+config/webtoken.json
+
+
 # Runtime data
 pids
 *.pid
