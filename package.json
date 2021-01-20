@@ -2,7 +2,10 @@
   "name": "sleep-iq-bed",
   "version": "1.0.0",
   "description": "Sleep IQ SmartThing Bed",
-  "repository": "https://github.com/gilderman/sleep-iq-bed",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gilderman/sleep-iq-bed.git"
+  },
   "main": "server.js",
   "scripts": {
     "test": "NODE_ENV=test ava --verbose",
@@ -21,5 +24,16 @@
   },
   "engines": {
     "node": "^12"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/gilderman/sleep-iq-bed/issues"
+  },
+  "homepage": "https://github.com/gilderman/sleep-iq-bed#readme",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {
+    "serverless-offline": "^6.8.0"
+  },
+  "keywords": []
 }

@@ -1,13 +1,24 @@
 'use strict';
 
-/**
- * AWS Lambda handler configured to host ST Schema connector
- */
+const { lambda } = require("st-schema");
+const SleepNumberBedSchemaConnector = require('./connector');
 
-const connector = require('./connector')
+const connector = new SleepNumberBedSchemaConnector();
 
-exports.handler = async (evt, context) => {
-  if (connector.accessTokenIsValid(context, null)) {
-	  await connector.handleLambdaCallback(evt, context);
-  }
-};
+async function stateRefreshCallback(request, response) {
+	return connector.stateRefreshCallback(request, response)
+}
+
+async function discoveryCallback(request, response) {
+	return connector.discoveryCallback(request, response)
+}
+
+async function commandCallback(request, response) {
+	return connector.commandCallback(request, response)
+}
+
+module.exports.handler = lambda({
+    discoveryRequest: discoveryCallback,
+    commandRequest: commandCallback,
+    stateRefreshRequest: stateRefreshCallback
+});

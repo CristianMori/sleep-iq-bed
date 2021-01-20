@@ -2,7 +2,7 @@ const jsonwebtoken = require('jsonwebtoken')
 const jwkToPem = require('jwk-to-pem')
 
 // https://cognito-idp.{region}.amazonaws.com/{userPoolId}/.well-known/jwks.json 
-const jsonWebKeys = require('./webtoken.json')['keys']
+const jsonWebKeys = require('./config/webtoken.json')['keys']
 
 const axios = require('axios')
 

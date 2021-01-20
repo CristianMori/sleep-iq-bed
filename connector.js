@@ -1,7 +1,7 @@
 'use strict';
 
-const SleepNumberConnectorAPI = require('./sleep-number-bed-connector-api')
-const ComponentTypes = require('./sleep-number-bed-components')
+const SleepNumberConnectorAPI = require('./lib/sleep-number-bed-connector-api')
+const ComponentTypes = require('./lib/sleep-number-bed-components')
 
 const {SchemaConnector, DeviceErrorTypes} = require('st-schema')
 
@@ -24,13 +24,15 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
 
     this.callbackAuthenticationCode = null
     this.stateCallback = null
-    
-    this.oauth = new oauth2(process.env.ACCESS_TOKEN_CLIENT_ID, process.env.USER_INFO_ENDPOINT)
-
-    this.sncAPI = new SleepNumberConnectorAPI(process.env.SLEEPIQ_EMAIL, process.env.SLEEPIQ_PASSWORD)
   }
   
   async initialize(accessToken) {
+console.log("ENDPOINT", process.env.USER_INFO_ENDPOINT);
+console.log("A ETO", process.env.AWS_LAMBDA_FUNCTION_NAME);
+
+    this.oauth = new oauth2(process.env.ACCESS_TOKEN_CLIENT_ID, process.env.USER_INFO_ENDPOINT)
+    this.sncAPI = new SleepNumberConnectorAPI(process.env.SLEEPIQ_EMAIL, process.env.SLEEPIQ_PASSWORD)
+
     this.healthStatus = true
     try {
         await this.sncAPI.setup(this.oauth, accessToken);
@@ -157,12 +159,13 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
   }
 }
 
-const connector = new SleepNumberBedSchemaConnector()
+//const connector = new SleepNumberBedSchemaConnector()
 
-connector.enableEventLogging(2)
-connector.discoveryHandler(connector.discoveryCallback)
-connector.stateRefreshHandler(connector.stateRefreshCallback)
-connector.commandHandler(connector.commandCallback)
-connector.callbackAccessHandler(connector.callbackAccessHandlerCallback)
+//connector.enableEventLogging(2)
+//connector.discoveryHandler(connector.discoveryCallback)
+//connector.stateRefreshHandler(connector.stateRefreshCallback)
+//connector.commandHandler(connector.commandCallback)
+//connector.callbackAccessHandler(connector.callbackAccessHandlerCallback)
 
-module.exports = connector
+module.exports = SleepNumberBedSchemaConnector;
+
