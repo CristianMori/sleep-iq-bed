@@ -1,2 +1,20 @@
-# save here content of the file your download from 
-# https://cognito-idp.{region}.amazonaws.com/{userPoolId}/.well-known/jwks.json 
+{
+  "keys": [
+    {
+      "alg": "RS256",
+      "e": "AQAB",
+      "kid": "UcA2/ASINqIZrWYlqpGtZNTwcMtbgtb1xpW8tPdLUWY=",
+      "kty": "RSA",
+      "n": "9uH-hJHEYnN1EuWAObArTSa0RUJHTdMij7BowMFU_8b_JKVWYwjQ-s-emDQHG5ax3pLeNx_L6BhkJGLFbkQTUrItPzhjtbJmw-8riA7m_Yf6roXiDrrq3C1InijBjyifHqvOkum-WBSfdIYWsIy_zLzftOgpXaFKfyjfEkRUDVUbsP3XcZKOs5lRNU2bD4xWZEhVEy9mPe9ZFupZjsSYt2i-OhwyWg5oBjYlESCGr-tNh3mzLgy65Wn1CkgknEMBJKNT-4tj1mahXRFeE9KATFZ41gPq8wDXquQUBzm_oiPdQQyeZzRzLtOLmx7EFFdADvUL1IM4L_M2gv-K0TaY0Q",
+      "use": "sig"
+    },
+    {
+      "alg": "RS256",
+      "e": "AQAB",
+      "kid": "jm2s1en2Tuw2e2ssdNAN3mWMhYKG+0Ds8CiphmbUhpI=",
+      "kty": "RSA",
+      "n": "wvvM2P8nxYN4ucgOqfzjswoWuUObAqbk4bufY2gz2X3X9CgxWjaqTVAPPT1d8hxra5UpithKHahCAuXF2dWTsRuTWEk4xGE5fDbYwfmCd1W3wpdYqhuuppFdU2XKSqrQsCv5SRoixdTH1vEa3ziN-OWOvDCAomotQop6Mh3Oj7dgqJUXGLtoJ5w6hbQDjitCHdoNletPcBu-i0tZVBdXUEGCDQwvSh_cndan2OYV4MGgxBS_4A6f81pLXmLC4o3jX8UYHCutM9_UVZJYA65xjCJskzsDFX0GhXMTVqhbRDH1Wnj0PFchmvoAecxzEa7FCM8m_R-5thfskek8GCqU1Q",
+      "use": "sig"
+    }
+  ]
+}
