@@ -28,8 +28,8 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
   
   async initialize(accessToken) {
 	super.clientId(process.env.CLIENT_ID)
-	super.clientId(process.env.CLIENT_SECRET)
-	
+	super.clientSecret(process.env.CLIENT_SECRET)
+
     this.oauth = new oauth2(process.env.ACCESS_TOKEN_CLIENT_ID, process.env.USER_INFO_ENDPOINT)
     this.sncAPI = new SleepNumberConnectorAPI(process.env.SLEEPIQ_EMAIL, process.env.SLEEPIQ_PASSWORD)
 
