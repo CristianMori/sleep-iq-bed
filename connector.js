@@ -15,7 +15,7 @@ const oauth2 = require('./oauth2')
 
 class SleepNumberBedSchemaConnector extends SchemaConnector {
   constructor() {
-    super({clientId: process.env.CLIENT_ID, clientSecret: process.env.CLIENT_SECRET})
+    super({})
 
     this.bedSide = 0
     this.healthStatus =  false
@@ -27,9 +27,9 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
   }
   
   async initialize(accessToken) {
-console.log("ENDPOINT", process.env.USER_INFO_ENDPOINT);
-console.log("A ETO", process.env.AWS_LAMBDA_FUNCTION_NAME);
-
+	super.clientId(process.env.CLIENT_ID)
+	super.clientId(process.env.CLIENT_SECRET)
+	
     this.oauth = new oauth2(process.env.ACCESS_TOKEN_CLIENT_ID, process.env.USER_INFO_ENDPOINT)
     this.sncAPI = new SleepNumberConnectorAPI(process.env.SLEEPIQ_EMAIL, process.env.SLEEPIQ_PASSWORD)
 
