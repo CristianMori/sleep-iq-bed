@@ -95,3 +95,4 @@ typings/
 .dynamodb/
 config/my-serverless.yaml
 config/webtoken.json
+config/my-webtoken.json
