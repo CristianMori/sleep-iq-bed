@@ -2,7 +2,14 @@
 
 require('dotenv').config();
 const express = require('express')
-const connector = require('./connector')
+
+const SleepNumberBedSchemaConnector = require('./connector');
+const connector = new SleepNumberBedSchemaConnector();
+
+connector.enableEventLogging(2)
+connector.discoveryHandler(connector.discoveryCallback)
+connector.stateRefreshHandler(connector.stateRefreshCallback)
+connector.commandHandler(connector.commandCallback)
 
 const PORT = process.env.PORT || 3000
 

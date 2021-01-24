@@ -27,10 +27,12 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
   }
   
   async initialize(accessToken) {
-	super.clientId(process.env.CLIENT_ID)
-	super.clientSecret(process.env.CLIENT_SECRET)
-
-    this.oauth = new oauth2(process.env.ACCESS_TOKEN_CLIENT_ID, process.env.USER_INFO_ENDPOINT)
+	  super.clientId(process.env.CLIENT_ID)
+	  super.clientSecret(process.env.CLIENT_SECRET)
+  
+    if (this.oauth == null) {
+      this.oauth = new oauth2(process.env.ACCESS_TOKEN_CLIENT_ID, process.env.USER_INFO_ENDPOINT)
+    }
     this.sncAPI = new SleepNumberConnectorAPI(process.env.SLEEPIQ_EMAIL, process.env.SLEEPIQ_PASSWORD)
 
     this.healthStatus = true
@@ -149,6 +151,10 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
   }
 
   accessTokenIsValid(req, res) {
+    if (this.oauth == null && process.env.ACCESS_TOKEN_CLIENT_ID != null) {
+      this.oauth = new oauth2(process.env.ACCESS_TOKEN_CLIENT_ID, process.env.USER_INFO_ENDPOINT)
+    }
+    
     if (this.oauth.validateToken(req.body.authentication.token)) {
       return true
     }
@@ -158,14 +164,6 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
     return false
   }
 }
-
-//const connector = new SleepNumberBedSchemaConnector()
-
-//connector.enableEventLogging(2)
-//connector.discoveryHandler(connector.discoveryCallback)
-//connector.stateRefreshHandler(connector.stateRefreshCallback)
-//connector.commandHandler(connector.commandCallback)
-//connector.callbackAccessHandler(connector.callbackAccessHandlerCallback)
 
 module.exports = SleepNumberBedSchemaConnector;
 
