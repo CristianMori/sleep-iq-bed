@@ -38,7 +38,7 @@ Clone or download this repository and follow the desired option.
 
 4. Deploy the Lambda function: `serverless deploy`.
 
-5. Navigate to the AWS Lambda dashboard to [add an env var](https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html) make sure all 6 config variables are set.
+5. Navigate to the AWS Lambda dashboard (https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html) make sure all 6 config variables are set.
 
 6. Follow the steps to grant SmartThings [permission to execute your Lambda function](https://smartthings.developer.samsung.com/docs/smartapps/aws-lambda.html). **This is required for successful registration.**
 
