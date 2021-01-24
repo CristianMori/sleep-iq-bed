@@ -5,26 +5,20 @@ const SleepNumberBedSchemaConnector = require('./connector');
 
 const connector = new SleepNumberBedSchemaConnector();
 
-async function stateRefreshCallback(event, response) {
-	const {headers, authentication, devices} = event;
-
-	return connector.stateRefreshCallback(authentication.token, response)
-}
-
-async function discoveryCallback(event, response) {
-	const {headers, authentication, devices} = event;
-
-	return connector.discoveryCallback(authentication.token, response)
-}
-
-async function commandCallback(event, response) {
-	const {headers, authentication, devices} = event;
-
-	return connector.commandCallback(authentication.token, response, devices)
-}
-
 module.exports.handler = lambda({
-    discoveryRequest: discoveryCallback,
-    commandRequest: commandCallback,
-    stateRefreshRequest: stateRefreshCallback
+	discoveryRequest: async function (event, response) {
+						if (connector.accessTokenIsValid(event.authentication.token, response)) {
+							return connector.discoveryCallback(event.authentication.token, response)
+						}	
+					},
+    commandRequest: async function (event, response) {
+						if (connector.accessTokenIsValid(event.authentication.token, response)) {
+							return connector.commandCallback(event.authentication.token, response, event.devices)
+						}
+					},
+    stateRefreshRequest: async function (event, response) {
+						if (connector.accessTokenIsValid(event.authentication.token, response)) {
+							return connector.stateRefreshCallback(event.authentication.token, response)
+						}
+					}
 });

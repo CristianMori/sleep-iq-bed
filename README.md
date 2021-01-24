@@ -9,7 +9,6 @@ There is also a local version for debugging purposes
 2. Alternative UI - i tried several options, for some reason it does not work
 3. Timer for heater (not super needed, never changed it)
 
-
 ## Setup instructions
 
 ### Prerequisites

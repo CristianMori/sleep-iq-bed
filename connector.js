@@ -150,12 +150,12 @@ class SleepNumberBedSchemaConnector extends SchemaConnector {
     device.modelName(DEVICE_MODEL_NAME);
   }
 
-  accessTokenIsValid(req, res) {
+  accessTokenIsValid(accessToken, res) {
     if (this.oauth == null && process.env.ACCESS_TOKEN_CLIENT_ID != null) {
       this.oauth = new oauth2(process.env.ACCESS_TOKEN_CLIENT_ID, process.env.USER_INFO_ENDPOINT)
     }
     
-    if (this.oauth.validateToken(req.body.authentication.token)) {
+    if (this.oauth.validateToken(accessToken)) {
       return true
     }
 

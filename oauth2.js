@@ -22,7 +22,7 @@ class oauth2 {
                   }
                 })
                 .catch(error => {
-                  console.log("ERROR :", error)
+                  console.log("ERROR :", error.message)
                   throw error;
                 });
   }

@@ -17,7 +17,7 @@ const server = express();
 server.use(express.json());
 
 server.post('/', (req, res) => {
-  if (connector.accessTokenIsValid(req, res)) {
+  if (connector.accessTokenIsValid(req.body.authentication.token, res)) {
     connector.handleHttpCallback(req, res)
   }
 });
