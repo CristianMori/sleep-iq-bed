@@ -93,6 +93,6 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
-config/my-serverless.yaml
+#config/my-serverless.yaml
 config/webtoken.json
 config/my-webtoken.json
